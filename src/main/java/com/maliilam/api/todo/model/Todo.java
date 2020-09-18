@@ -2,7 +2,13 @@ package com.maliilam.api.todo.model;
 
 import java.util.Map;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "todo")
 public class Todo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
     public String title;
     public boolean completed;
