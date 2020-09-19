@@ -12,18 +12,22 @@ import org.springframework.stereotype.Component;
 public class MemoryTodoDAO implements TodoDAO {
     private List<Todo> todos = new ArrayList<Todo>();
     private Integer maxId = 0;
-    public List<Todo> getTodos() {
+    public List<Todo> findAll() {
         return todos;
     }
-    public Optional<Todo> getTodo(Integer id) {
+    public Optional<Todo> findById(Integer id) {
         return todos.stream().filter(todo -> todo.id.equals(id)).findFirst();
     }
-    public Optional<Todo> addTodo(Todo todo) {
-        todo.id = maxId++;
-        this.todos.add(todo);
-        return Optional.of(todo);
+    public Todo save(Todo todo) {
+        if (todo.id == null) {
+            todo.id = maxId++;
+            this.todos.add(todo);
+            return todo;    
+        } else {
+            return update(todo).orElse(null);
+        }
     }
-    public Optional<Todo> updateTodo(Todo todoUpdate) {
+    private Optional<Todo> update(Todo todoUpdate) {
         Optional<Todo> foundTodo = todos.stream()
             .filter(todo -> todo.id.equals(todoUpdate.id))
             .findFirst();
@@ -33,9 +37,8 @@ public class MemoryTodoDAO implements TodoDAO {
         });
         return foundTodo;
     }
-    public Optional<Todo> deleteTodo(Integer id) {
-        Optional<Todo> foundTodo = todos.stream().filter(todo -> todo.id.equals(id)).findFirst();
-        foundTodo.ifPresent( td -> todos.removeIf(todo -> todo.id.equals(id)));
-        return foundTodo;        
+    public void delete(Todo todo) {
+        Optional<Todo> foundTodo = todos.stream().filter(td -> td.id.equals(todo.id)).findFirst();
+        foundTodo.ifPresent( td -> todos.removeIf(t -> t.id.equals(td.id)));       
     }
 }

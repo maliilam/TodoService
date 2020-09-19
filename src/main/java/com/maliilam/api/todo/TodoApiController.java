@@ -45,7 +45,7 @@ public class TodoApiController {
     }
 
     @DeleteMapping("/todos/{id}")
-    public Optional<Todo> deleteTodo(@PathVariable Integer id) {
-        return this.todoService.deleteTodo(id);
+    public void deleteTodo(@PathVariable Integer id) {
+        this.todoService.deleteTodo(id);
     }
 }

@@ -17,19 +17,22 @@ public class TodoService {
     }
 
     public List<Todo> getTodos() {
-        return todoDAO.getTodos();
+        return todoDAO.findAll();
     }
     public Optional<Todo> getTodo(Integer id) {
-        return todoDAO.getTodo(id);
+        return todoDAO.findById(id);
     }
     public Optional<Todo> addTodo(Todo todo) {
-        return todoDAO.addTodo(todo);
+        todo.id = null;
+        return Optional.ofNullable(todoDAO.save(todo));
     }
     public Optional<Todo> updateTodo(Todo todo) {
-        return this.todoDAO.updateTodo(todo);
+        return todo.id == null ? Optional.empty() : Optional.ofNullable(todoDAO.save(todo));
     }
-    public Optional<Todo> deleteTodo(Integer id) {
-        return this.todoDAO.deleteTodo(id);
+    public void deleteTodo(Integer id) {
+        Todo todo = new Todo();
+        todo.id = id;
+        this.todoDAO.delete(todo);
     }
 
 }
