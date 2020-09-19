@@ -439,7 +439,7 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\ma\Documents\GitHub\Todo\TodoNg\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\Users\ma\Documents\GitHub\ng\todo\src\styles.css */"./src/styles.css");
 
 
 /***/ })
